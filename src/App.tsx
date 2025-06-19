@@ -1,10 +1,18 @@
+import { Routes, Route, Navigate } from 'react-router';
 import './App.css';
+import Admin from './pages/Admin';
+import Chat from './pages/Chat';
+import Login from './pages/Login';
 
 function App() {
   return (
     <>
-      <h1>App</h1>
-      <button className="bg-sky-500 hover:bg-sky-700">Save changes</button>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }
