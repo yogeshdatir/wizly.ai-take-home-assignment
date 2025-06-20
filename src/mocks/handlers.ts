@@ -38,4 +38,23 @@ export const handlers = [
     const largeChatHistory = generateDummyChat(500); // adjust number here
     return HttpResponse.json(largeChatHistory);
   }),
+
+  http.get('/api/stats', () => {
+    const stats = {
+      totalConversations: 124,
+      averageSessionLength: '6.2',
+      mostCommonQuestions: [
+        { question: 'What is your name?', count: 35 },
+        { question: 'Do you like coffee?', count: 30 },
+        { question: 'Which coffee do you prefer?', count: 20 },
+      ],
+      dropOffPoints: [
+        { step: 'q2', dropCount: 12 },
+        { step: 'q3', dropCount: 8 },
+        { step: 'q4', dropCount: 5 },
+      ],
+    };
+
+    return HttpResponse.json(stats);
+  }),
 ];
