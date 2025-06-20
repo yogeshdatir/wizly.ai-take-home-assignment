@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { login } from '../api/auth';
 import { useNavigate } from 'react-router';
+import Spinner from '../components/Spinner';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const token = await login(email, password);
@@ -25,6 +28,8 @@ function Login() {
       }
     } catch {
       setError('Login failed. Try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,9 +63,10 @@ function Login() {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white p-2 rounded flex items-center justify-center cursor-pointer disabled:cursor-progress"
         >
-          Login
+          {loading ? <Spinner /> : 'Login'}
         </button>
       </form>
     </div>

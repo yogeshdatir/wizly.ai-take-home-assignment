@@ -4,6 +4,7 @@ import Chat from './pages/Chat';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminFlow from './pages/AdminFlow';
 import AdminLayout from './layouts/AdminLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -14,11 +15,25 @@ function App() {
       {/* Public */}
       <Route path="/login" element={<Login />} />
 
-      {/* User */}
-      <Route path="/chat" element={<Chat />} />
+      {/* Protected user route */}
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute allowedRoles={['user']}>
+            <Chat />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Admin (with layout) */}
-      <Route path="/admin" element={<AdminLayout />}>
+      {/* Protected admin layout and nested routes */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="flow" element={<AdminFlow />} />
       </Route>
